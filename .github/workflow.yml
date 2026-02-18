@@ -1,0 +1,44 @@
+name: Build and Push Docker Image
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main   # change to your branch
+
+jobs:
+  build-and-push:
+    # Only run if PR is merged AND merged by specific user
+    if: >
+      github.event.pull_request.merged == true &&
+      github.actor == 'Kavin-dev54'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log context (debug)
+        run: |
+          echo "Merged by: ${{ github.actor }}"
+          echo "Branch: ${{ github.ref }}"
+
+      # Docker login example
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ kavin2005 }}
+          password: ${{ Kavin2005 }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t kavin2005/myapp:${{ github.sha }} .
+
+      - name: Push Docker image
+        run: |
+          docker push kavin2005/myapp:${{ github.sha }}
