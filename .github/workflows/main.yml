@@ -1,17 +1,18 @@
 name: Build and Push Docker Image
 
 on:
-  pull_request:
-    types: [closed]
+  push:
+  # pull_request:
+    # types: [closed]
     branches:
       - main  
 
 jobs:
   build-and-push:
     # Only run if PR is merged AND merged by specific user
-    if: >
-      github.event.pull_request.merged == true &&
-      github.actor == 'Kavin-dev54'
+    # if: >
+    #   github.event.pull_request.merged == true &&
+    #   github.actor == 'Kavin-dev54'
 
     runs-on: ubuntu-latest
 
